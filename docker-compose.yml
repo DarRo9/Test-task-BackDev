@@ -1,0 +1,15 @@
+services:
+  auth-app:
+    build:
+      context: .
+    env_file:
+      - config.env
+    links:
+      - auth-database
+    ports:
+      - "8080:8080"
+
+  auth-database:
+    image: mongo
+    ports:
+      - "28017:27017"
