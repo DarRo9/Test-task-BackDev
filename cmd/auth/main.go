@@ -43,13 +43,13 @@ func main() {
 		slog.String("env", config.Env))
 	log.Debug("Messages about debug are enabled")
 
-	mongoClient, err := mongodb.CreateObjectClient(config.MongoDB.URI, config.MongoDB.User, config.MongoDB.Password)
+	mongoClient, err := mongodb.CreateObjectClient(config.Mongo.URI, config.Mongo.User, config.Mongo.Password)
 	if err != nil {
 		log.Error("Fail of initiation storage", sl.Err(err))
 		os.Exit(1)
 	}
 
-	mongoDatabase := mongodb.CreateObjectStorage(mongoClient, config.MongoDB.Database)
+	mongoDatabase := mongodb.CreateObjectStorage(mongoClient, config.Mongo.Database)
 	mongoRefreshRepo := mongoDatabase.CreateObjectRefreshRepo()
 
 	tokenAuthenticator, err := auth.CreateObject(config.JWT.SigningKey)

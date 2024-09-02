@@ -20,7 +20,7 @@ type JWT struct {
 	SigningKey      string
 }
 
-type MongoDB struct {
+type Mongo struct {
 	URI      string
 	User     string
 	Password string
@@ -31,18 +31,18 @@ type MongoDB struct {
 type Config struct {
 	Env        string `yaml:"env" env-default:"local"`
 	HTTPServer `yaml:"http_server"`
-	MongoDB
+	Mongo
 	JWT `yaml:"jwt"`
 }
 
 func MakeEnvSettings(config *Config) {
 	if config.Env == "local" {
-		config.MongoDB.URI = "mongodb://localhost:27017"
+		config.Mongo.URI = "mongodb://localhost:27017"
 	} else {
-		config.MongoDB.URI = os.Getenv("MONGO_URI")
+		config.Mongo.URI = os.Getenv("MONGO_URI")
 	}
 
-	config.MongoDB.Database = os.Getenv("MONGO_DATABASE")
+	config.Mongo.Database = os.Getenv("MONGO_DATABASE")
 
 	config.JWT.SigningKey = os.Getenv("JWT_SIGNING_KEY")
 }
